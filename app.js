@@ -224,3 +224,12 @@ window.showToast = function(message) {
     toast.style.opacity = '0';
   }, 3000);
 };
+
+  // DOM XSS Sanitizer for SVG Preview
+  function sanitizeSVG(svgString) {
+    return svgString
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/on\w+="[^"]*"/gi, '')
+      .replace(/on\w+='[^']*'/gi, '')
+      .replace(/javascript:/gi, '');
+  }
