@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Code Cleaner, Minifier & Visual Path Viewer | Zero-Login Free Tool</title>
+  <meta name="description" content="Optimize, clean, minify, and inspect SVG markup online. Reduce file size, remove unwanted attributes, round decimal precision, and view live rendered SVG preview.">
+  <meta name="keywords" content="svg optimizer, clean svg path, svg minifier, inline svg viewer, remove svg metadata, viewBox calculator, web developer svg tool">
+  <link rel="canonical" href="https://svgoptimizer.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://svgoptimizer.app/">
+  <meta property="og:title" content="SVG Code Cleaner & Visual Path Optimizer">
+  <meta property="og:description" content="Clean, minify, scale, and preview SVG code in your browser with zero server uploads. Fast & 100% private.">
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SVG Path Optimizer & Viewer",
+    "url": "https://svgoptimizer.app/",
+    "description": "Zero-login developer tool for minifying SVG markup, removing metadata, rounding path coordinates, and visualizing vectors.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="background-glow"></div>
+
+  <header class="navbar">
+    <div class="logo">
+      <span class="icon">✨</span>
+      <span class="title">SVG Path Studio</span>
+    </div>
+    <div class="badge">100% Client-Side & Private</div>
+  </header>
+
+  <main class="container">
+    <header class="hero">
+      <h1>SVG Code Cleaner & Path Optimizer</h1>
+      <p>Paste raw SVG markup or upload `.svg` files to sanitize XML, strip redundant editor metadata, round decimal coordinate precision, and view instant live vector previews.</p>
+    </header>
+
+    <div class="grid">
+      <!-- Left Panel: Controls & Input Code -->
+      <section class="card glass-panel">
+        <h2><span class="step-num">1</span> Input SVG Code / Upload</h2>
+
+        <div class="drop-zone" id="dropZone">
+          <p>Drag & drop `.svg` file here or <label for="fileInput" class="upload-link">browse files</label></p>
+          <input type="file" id="fileInput" accept=".svg,image/svg+xml">
+        </div>
+
+        <div class="form-group margin-top">
+          <label for="svgInput">Raw SVG Code</label>
+          <textarea id="svgInput" placeholder='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#6366f1"/></svg>' rows="10"></textarea>
+        </div>
+
+        <h2><span class="step-num">2</span> Optimization Rules</h2>
+        
+        <div class="options-grid">
+          <label class="checkbox-label">
+            <input type="checkbox" id="optComments" checked> Remove Comments & XML Doc
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optMetadata" checked> Remove Editor Metadata (Inkscape/Illustrator)
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optEmptyGroups" checked> Collapse Empty Groups (&lt;g&gt;)
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optWhitespace" checked> Minify Whitespace & Line Breaks
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="optPrecision" checked> Round Decimals Precision
+          </label>
+        </div>
+
+        <div class="form-row margin-top">
+          <div class="form-group">
+            <label for="decimalDigits">Decimal Precision</label>
+            <select id="decimalDigits">
+              <option value="1">1 Decimal (e.g. 12.4)</option>
+              <option value="2" selected>2 Decimals (e.g. 12.45)</option>
+              <option value="3">3 Decimals (e.g. 12.456)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="scaleFactor">Scale Vector Size</label>
+            <select id="scaleFactor">
+              <option value="1.0" selected>Original Size (1.0x)</option>
+              <option value="1.5">1.5x Bigger</option>
+              <option value="2.0">2.0x Double</option>
+              <option value="0.5">0.5x Half</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="btnOptimize" class="btn btn-primary">⚡ Optimize & Clean SVG</button>
+          <button id="btnPreset" class="btn btn-secondary">Load Sample Vector</button>
+        </div>
+      </section>
+
+      <!-- Right Panel: Rendered Visual Preview & Output Code -->
+      <section class="card glass-panel results-section">
+        <h2>Live Rendered Preview</h2>
+
+        <div class="preview-box" id="previewContainer">
+          <div id="svgPreview" class="svg-render">
+            <span class="placeholder-text">Rendered vector preview will appear here</span>
+          </div>
+        </div>
+
+        <div class="stats-banner">
+          <div class="stat-item">
+            <span>Original Size:</span>
+            <strong id="origSize">0 B</strong>
+          </div>
+          <div class="stat-item">
+            <span>Optimized Size:</span>
+            <strong id="optSize">0 B</strong>
+          </div>
+          <div class="stat-item">
+            <span>Savings:</span>
+            <strong id="sizeSavings" class="highlight-green">0%</strong>
+          </div>
+        </div>
+
+        <div class="form-group margin-top">
+          <div class="output-header">
+            <label for="svgOutput">Cleaned & Minified SVG Output</label>
+            <div class="btn-group">
+              <button id="btnCopy" class="btn btn-sm">📋 Copy SVG</button>
+              <button id="btnDownload" class="btn btn-sm btn-accent">💾 Download .svg</button>
+            </div>
+          </div>
+          <textarea id="svgOutput" readonly rows="8" placeholder="Optimized SVG code will be output here..."></textarea>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEO Informational Article Section -->
+    <article class="card glass-panel seo-content">
+      <h2>Why Optimize SVG Graphics for Modern Web Applications?</h2>
+      <p>Scalable Vector Graphics (SVG) are the gold standard for icons, logos, and UI illustrations on the web. However, design tools like Adobe Illustrator, Inkscape, and Figma often export SVGs filled with bloated metadata, editor namespaces, unused definitions, and excessive decimal coordinates.</p>
+
+      <h3>Key Benefits of SVG Minification:</h3>
+      <ul>
+        <li><strong>Reduced Payload:</strong> Minifying SVG code reduces file sizes by 30% to 70%, improving web performance and Google Lighthouse speed scores.</li>
+        <li><strong>Clean Inline Code:</strong> Removing useless wrappers allows clean CSS styling and direct DOM manipulation via JS.</li>
+        <li><strong>Zero Data Leakage:</strong> Processing SVGs 100% locally in your browser ensures proprietary designs and brand logos are never uploaded to remote servers.</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 SVG Path Studio. Free & Open-Source Frontend Developer Tool.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
